@@ -53,6 +53,15 @@
 		DAE0022B19C567A40035F1A0 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE0022419C567A40035F1A0 /* Edge.swift */; };
 		DAE0022C19C567A40035F1A0 /* AVLTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE0022519C567A40035F1A0 /* AVLTree.swift */; };
 		DAE0022D19C567A40035F1A0 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE0022619C567A40035F1A0 /* extensions.swift */; };
+		F257F8471B410A7D00C44B69 /* BloomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257F8431B410A7D00C44B69 /* BloomFilter.swift */; };
+		F257F84A1B410AC400C44B69 /* BloomTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257F8491B410AC400C44B69 /* BloomTest.swift */; };
+		F257F84B1B410B7D00C44B69 /* BloomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257F8431B410A7D00C44B69 /* BloomFilter.swift */; };
+		F2CBB4B21B42757100C9D42D /* HashFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4AF1B42757100C9D42D /* HashFunctions.swift */; };
+		F2CBB4B31B42757100C9D42D /* Murmur.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4B11B42757100C9D42D /* Murmur.m */; };
+		F2CBB4B51B4276C300C9D42D /* HashFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4AF1B42757100C9D42D /* HashFunctions.swift */; };
+		F2CBB4B71B42772300C9D42D /* BitVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4B61B42772300C9D42D /* BitVector.swift */; };
+		F2CBB4B81B42772900C9D42D /* BitVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4B61B42772300C9D42D /* BitVector.swift */; };
+		F2CBB4BA1B42806100C9D42D /* BitVectorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CBB4B91B42806100C9D42D /* BitVectorTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +130,14 @@
 		DAE0022419C567A40035F1A0 /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		DAE0022519C567A40035F1A0 /* AVLTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVLTree.swift; sourceTree = "<group>"; };
 		DAE0022619C567A40035F1A0 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		F257F8431B410A7D00C44B69 /* BloomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloomFilter.swift; sourceTree = "<group>"; };
+		F257F8491B410AC400C44B69 /* BloomTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BloomTest.swift; sourceTree = "<group>"; };
+		F2CBB4AF1B42757100C9D42D /* HashFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashFunctions.swift; path = HashFunctions/HashFunctions.swift; sourceTree = "<group>"; };
+		F2CBB4B01B42757100C9D42D /* Murmur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Murmur.h; path = HashFunctions/Murmur.h; sourceTree = "<group>"; };
+		F2CBB4B11B42757100C9D42D /* Murmur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Murmur.m; path = HashFunctions/Murmur.m; sourceTree = "<group>"; };
+		F2CBB4B41B42759100C9D42D /* SwiftStructures-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftStructures-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2CBB4B61B42772300C9D42D /* BitVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitVector.swift; sourceTree = "<group>"; };
+		F2CBB4B91B42806100C9D42D /* BitVectorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitVectorTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +209,8 @@
 				DAD971AD19D222E300C133C9 /* LinkedTest.swift */,
 				DAD971AB19D1F86300C133C9 /* SortingTest.swift */,
 				DA7B7C6319CA284100D2E177 /* StructureTest.swift */,
+				F257F8491B410AC400C44B69 /* BloomTest.swift */,
+				F2CBB4B91B42806100C9D42D /* BitVectorTest.swift */,
 				DAE0020419C564C90035F1A0 /* Supporting Files */,
 			);
 			path = SwiftTests;
@@ -208,6 +227,8 @@
 		DAE0020F19C5670E0035F1A0 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				F2CBB4B41B42759100C9D42D /* SwiftStructures-Bridging-Header.h */,
+				F2CBB4AB1B4273EB00C9D42D /* HashFunctions */,
 				DAE0021019C5673F0035F1A0 /* Factories */,
 				DAE0021F19C567870035F1A0 /* Structures */,
 			);
@@ -217,6 +238,7 @@
 		DAE0021019C5673F0035F1A0 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
+				F257F8431B410A7D00C44B69 /* BloomFilter.swift */,
 				DA8146A419ED905B004516F9 /* Trie.swift */,
 				DAE0021119C5677D0035F1A0 /* LinkedList.swift */,
 				DAE0021219C5677D0035F1A0 /* Graph.swift */,
@@ -225,6 +247,7 @@
 				DAE0021519C5677D0035F1A0 /* Stack.swift */,
 				DAE0021619C5677D0035F1A0 /* PathHeap.swift */,
 				DA908DDB1A0160A300DD9864 /* HashTable.swift */,
+				F2CBB4B61B42772300C9D42D /* BitVector.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -243,6 +266,16 @@
 				DA908DD91A015FB400DD9864 /* HashNode.swift */,
 			);
 			path = Structures;
+			sourceTree = "<group>";
+		};
+		F2CBB4AB1B4273EB00C9D42D /* HashFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				F2CBB4AF1B42757100C9D42D /* HashFunctions.swift */,
+				F2CBB4B01B42757100C9D42D /* Murmur.h */,
+				F2CBB4B11B42757100C9D42D /* Murmur.m */,
+			);
+			name = HashFunctions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,8 +385,11 @@
 				DAE0021919C5677D0035F1A0 /* Graph.swift in Sources */,
 				DAE0022919C567A40035F1A0 /* LLNode.swift in Sources */,
 				DAE0022B19C567A40035F1A0 /* Edge.swift in Sources */,
+				F257F8471B410A7D00C44B69 /* BloomFilter.swift in Sources */,
 				DAE0021B19C5677D0035F1A0 /* Queue.swift in Sources */,
+				F2CBB4B21B42757100C9D42D /* HashFunctions.swift in Sources */,
 				DAE0021C19C5677D0035F1A0 /* Stack.swift in Sources */,
+				F2CBB4B31B42757100C9D42D /* Murmur.m in Sources */,
 				DA908DDA1A015FB400DD9864 /* HashNode.swift in Sources */,
 				DAE0021E19C5677D0035F1A0 /* TrieNode.swift in Sources */,
 				DAE0021D19C5677D0035F1A0 /* PathHeap.swift in Sources */,
@@ -365,6 +401,7 @@
 				DA908DDC1A0160A300DD9864 /* HashTable.swift in Sources */,
 				DAE0022719C567A40035F1A0 /* Path.swift in Sources */,
 				DA8146A519ED905B004516F9 /* Trie.swift in Sources */,
+				F2CBB4B71B42772300C9D42D /* BitVector.swift in Sources */,
 				DAE0021A19C5677D0035F1A0 /* Sorting.swift in Sources */,
 				DA34571419CA3A9000DC871F /* LinkedList.swift in Sources */,
 				DAE0022819C567A40035F1A0 /* QNode.swift in Sources */,
@@ -378,6 +415,9 @@
 				DA7BD6AF19CCED3A00DB2CB4 /* Graph.swift in Sources */,
 				DA66A48A1B1CF50500D1B43F /* ClosureTest.swift in Sources */,
 				DA7BD6B119CCED7A00DB2CB4 /* Queue.swift in Sources */,
+				F2CBB4B51B4276C300C9D42D /* HashFunctions.swift in Sources */,
+				F257F84B1B410B7D00C44B69 /* BloomFilter.swift in Sources */,
+				F2CBB4B81B42772900C9D42D /* BitVector.swift in Sources */,
 				DAD971AE19D222E300C133C9 /* LinkedTest.swift in Sources */,
 				DA7B7C6419CA284100D2E177 /* StructureTest.swift in Sources */,
 				DA8146A619ED905B004516F9 /* Trie.swift in Sources */,
@@ -392,7 +432,9 @@
 				DA7B7C6219CA178900D2E177 /* AVLTree.swift in Sources */,
 				DA26BCCF19CBA3D200C0903A /* Sorting.swift in Sources */,
 				DA7B7C5A19CA0BF300D2E177 /* Edge.swift in Sources */,
+				F2CBB4BA1B42806100C9D42D /* BitVectorTest.swift in Sources */,
 				DA908DDE1A016A7700DD9864 /* HashTest.swift in Sources */,
+				F257F84A1B410AC400C44B69 /* BloomTest.swift in Sources */,
 				DA7B7C5319C8F67A00D2E177 /* LLNode.swift in Sources */,
 				DA34572D19CA3F1F00DC871F /* Path.swift in Sources */,
 				DA908DDF1A016A9200DD9864 /* HashTable.swift in Sources */,
@@ -485,6 +527,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Dom/Documents/SwiftStructures/Source/SwiftStructures-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -520,6 +563,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Dom/Documents/SwiftStructures/Source/SwiftStructures-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -531,6 +575,7 @@
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Dom/Documents/SwiftStructures/Source/SwiftStructures-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -541,6 +586,7 @@
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Dom/Documents/SwiftStructures/Source/SwiftStructures-Bridging-Header.h";
 			};
 			name = Release;
 		};

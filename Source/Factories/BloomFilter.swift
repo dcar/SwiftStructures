@@ -8,37 +8,30 @@
 
 import Foundation
 
-struct Murmur {
-  static func hash(seed: Int, str: String) -> UInt32 {
-    var len = CInt(count(str))
-    return MurmurHashAligned2(str, len, CUnsignedInt(seed))
-  }  
-}
-
-protocol Murmable {
+protocol Queryable {
   func hash(seed: Int) -> UInt32
 }
 
-extension String: Murmable {
+extension String: Queryable {
   func hash(seed: Int) -> UInt32 {
-    return Murmur.hash(seed, str: self)
+    return HashFunctions.murmur32(seed, str: self)
   }
 }
 
-extension Int: Murmable {
+extension Int: Queryable {
   func hash(seed: Int) -> UInt32 {
-    return Murmur.hash(seed, str: (self.description))
+    return HashFunctions.murmur32(seed, str: (self.description))
   }
 }
 
-extension Double: Murmable {
+extension Double: Queryable {
   func hash(seed: Int) -> UInt32 {
-    return Murmur.hash(seed, str: self.description)
+    return HashFunctions.murmur32(seed, str: self.description)
   }
 }
 
 class BloomFilter {
-  private var bitVector: CFMutableBitVectorRef
+  private var bitVector: BitVector
   //m is the optimal bit vector size.
   private var m = 0
   //k is the optimal number of hashes
@@ -51,25 +44,28 @@ class BloomFilter {
     let numerator: Double = Double(n) * log(p)
     m = Int( (numerator / denominator) * -1.0 )
     k = Int( (Double(m) / Double(n)) * log(2.0) )
-    bitVector = CFBitVectorCreateMutable(nil, m)
+    if m < 0 {
+      NSException(name: "False Positive Error", reason: "Probability too high", userInfo: nil).raise()
+    }
+    bitVector = BitVector(size: m)
   }
   
-  func insert(item: Murmable) {
+  func insert(item: Queryable) {
     if m == 0 || k == 0 { return }
     
     for var i = 0; i < k; i++ {
       let index = item.hash(i) % UInt32(m)
-      CFBitVectorSetBitAtIndex(bitVector, Int(index), 1)
+      bitVector[Int(index)] = true
     }
     
   }
   
-  func query(item: Murmable) -> Bool {
+  func query(item: Queryable) -> Bool {
     for var i = 0; i < k; i++ {
       let index = item.hash(i) % UInt32(m)
-      let bit = CFBitVectorGetBitAtIndex(bitVector, Int(index))
+      let bit = bitVector[Int(index)]
         
-      if bit == 0 { return false }
+      if bit == false { return false }
     }
     return true
  
