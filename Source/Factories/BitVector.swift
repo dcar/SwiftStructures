@@ -18,7 +18,7 @@ class BitVector {
   subscript(index: Int) -> Bool {
     get {
       var byte = arr[byteIndex(index)]
-      return 0 != byte & mask(index)
+      return 0 != (byte & mask(index))
     }
     
     set(value) {

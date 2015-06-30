@@ -13,8 +13,8 @@ class BloomTest: XCTestCase {
   var filter = BloomFilter(n: 4000000, p: 0.000000000001)
   
   func testFail() {
-    let query = filter.query(2)
-    XCTAssert(query == false, "2 should not be in the filter.")
+    let query = filter.query("fadfadsfadsfnasndfnasdjfajsdfasdfadf")
+    XCTAssert(query == false, "Query should be false.")
   }
   
   func testInsert() {

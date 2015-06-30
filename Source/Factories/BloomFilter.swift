@@ -36,6 +36,7 @@ class BloomFilter {
   private var m = 0
   //k is the optimal number of hashes
   private var k = 0
+  private var excp = NSException(name: "False Positive Error", reason: "Probability too high: 0 to 1", userInfo: nil)
   
   //n is the expected input size.
   //p is the probability of false positives.
@@ -44,11 +45,19 @@ class BloomFilter {
     let numerator: Double = Double(n) * log(p)
     m = Int( (numerator / denominator) * -1.0 )
     k = Int( (Double(m) / Double(n)) * log(2.0) )
-    if m < 0 {
-      NSException(name: "False Positive Error", reason: "Probability too high", userInfo: nil).raise()
-    }
+    if m < 0 { excp.raise() }
     bitVector = BitVector(size: m)
   }
+  
+  
+  //designate your desired array size and number of hashes
+  init(m: Int, k: Int) {
+    self.k = k
+    self.m = m
+    if m < 0 { excp.raise() }
+    bitVector = BitVector(size: m)
+  }
+  
   
   func insert(item: Queryable) {
     if m == 0 || k == 0 { return }
@@ -60,6 +69,7 @@ class BloomFilter {
     
   }
   
+  
   func query(item: Queryable) -> Bool {
     for var i = 0; i < k; i++ {
       let index = item.hash(i) % UInt32(m)
@@ -70,6 +80,5 @@ class BloomFilter {
     return true
  
   }
-  
   
 }

@@ -13,8 +13,9 @@ class BitVectorTest: XCTestCase {
   var bitVector = BitVector(size: 22)
   
   func testFalse() {
-    bitVector[0] = false
-    var value = bitVector[0]
+    bitVector[5] = true
+    bitVector[5] = false
+    var value = bitVector[5]
     XCTAssert(value == false, "value Should be false.")
   }
   
