@@ -65,7 +65,7 @@ class BitFile: BitType {
     if let file = NSMutableData(contentsOfFile: location) {
       var byte = UnsafePointer<Void>(bitPattern: 0x00)
       for var i = 0; i < size; i++ {
-        file.appendBytes(byte, length: sizeof(Void) * 1)
+        file.appendBytes(byte, length: sizeof(Void))
       }
     }
     else { return nil }
@@ -104,7 +104,7 @@ class BitFile: BitType {
     let byteIndex = UInt64(shared.byteIndex(index))
     file.seekToFileOffset(byteIndex)
     var byte: CUnsignedChar = 0
-    file.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar)*1)
+    file.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar))
     return byte
   }
 }
