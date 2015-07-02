@@ -11,6 +11,7 @@ import XCTest
 
 class BitVectorTest: XCTestCase {
   var bitVector = BitVector(size: 22)
+  var bitFile = BitFile(size: 22, location: "/Users/Dom/bit-file.dat")!
   
   func testFalse() {
     bitVector[5] = true
@@ -22,6 +23,12 @@ class BitVectorTest: XCTestCase {
   func testTrue() {
     bitVector[0] = true
     var value = bitVector[0]
+    XCTAssert(value == true, "value Should be true.")
+  }
+  
+  func testBitFileTrue() {
+    bitFile[5] = true
+    var value = bitFile[5]
     XCTAssert(value == true, "value Should be true.")
   }
 

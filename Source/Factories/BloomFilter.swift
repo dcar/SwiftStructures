@@ -31,22 +31,18 @@ extension Double: Queryable {
 }
 
 class BloomFilter {
-  private var bitVector: BitVector
+  private var bitType: BitType?
   //m is the optimal bit vector size.
   private var m = 0
   //k is the optimal number of hashes
   private var k = 0
-  private var excp = NSException(name: "False Positive Error", reason: "Probability too high: 0 to 1", userInfo: nil)
+  
   
   //n is the expected input size.
   //p is the probability of false positives.
   init(n: Int, p: Double) {
-    let denominator: Double = (log(2.0) * (log(2.0)))
-    let numerator: Double = Double(n) * log(p)
-    m = Int( (numerator / denominator) * -1.0 )
-    k = Int( (Double(m) / Double(n)) * log(2.0) )
-    if m < 0 { excp.raise() }
-    bitVector = BitVector(size: m)
+    calculate(n, p)
+    bitType = BitVector(size: m)
   }
   
   
@@ -54,8 +50,16 @@ class BloomFilter {
   init(m: Int, k: Int) {
     self.k = k
     self.m = m
+    var excp = NSException(name: "Size Error", reason: "m must be > 0", userInfo: nil)
     if m < 0 { excp.raise() }
-    bitVector = BitVector(size: m)
+    bitType = BitVector(size: m)
+  }
+  
+  init?(n: Int, p: Double, path: String) {
+    calculate(n, p)
+    if let bitType = BitFile(size: m, location: path) {
+    }
+    else { return nil }
   }
   
   
@@ -64,7 +68,7 @@ class BloomFilter {
     
     for var i = 0; i < k; i++ {
       let index = item.hash(i) % UInt32(m)
-      bitVector[Int(index)] = true
+      bitType![Int(index)] = true
     }
     
   }
@@ -73,12 +77,21 @@ class BloomFilter {
   func query(item: Queryable) -> Bool {
     for var i = 0; i < k; i++ {
       let index = item.hash(i) % UInt32(m)
-      let bit = bitVector[Int(index)]
+      let bit = bitType![Int(index)]
         
       if bit == false { return false }
     }
     return true
  
+  }
+  
+  private func calculate(n: Int, _ p: Double) {
+    let denominator: Double = (log(2.0) * (log(2.0)))
+    let numerator: Double = Double(n) * log(p)
+    m = Int( (numerator / denominator) * -1.0 )
+    k = Int( (Double(m) / Double(n)) * log(2.0) )
+    var excp = NSException(name: "False Positive Error", reason: "Probability too high: 0 to 1.", userInfo: nil)
+    if m < 0 { excp.raise() }
   }
   
 }
