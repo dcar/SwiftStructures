@@ -27,8 +27,8 @@ class BitVectorTest: XCTestCase {
   }
   
   func testBitFileTrue() {
-    bitFile[5] = true
-    var value = bitFile[5]
+    bitFile[21] = true
+    var value = bitFile[21]
     XCTAssert(value == true, "value Should be true.")
   }
 
