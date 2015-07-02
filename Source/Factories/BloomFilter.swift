@@ -57,8 +57,7 @@ class BloomFilter {
   
   init?(n: Int, p: Double, path: String) {
     calculate(n, p)
-    if let bitType = BitFile(size: m, location: path) {
-    }
+    if let bitType = BitFile(size: UInt64(m), location: path) {}
     else { return nil }
   }
   
@@ -67,8 +66,8 @@ class BloomFilter {
     if m == 0 || k == 0 { return }
     
     for var i = 0; i < k; i++ {
-      let index = item.hash(i) % UInt32(m)
-      bitType![Int(index)] = true
+      let index = Int( item.hash(i) % UInt32(m) )
+      bitType![index] = true
     }
     
   }
@@ -76,8 +75,8 @@ class BloomFilter {
   
   func query(item: Queryable) -> Bool {
     for var i = 0; i < k; i++ {
-      let index = item.hash(i) % UInt32(m)
-      let bit = bitType![Int(index)]
+      let index = Int( item.hash(i) % UInt32(m) )
+      let bit = bitType![index]
         
       if bit == false { return false }
     }

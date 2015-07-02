@@ -58,14 +58,15 @@ class BitFile: BitType {
   private var location: String = ""
   private var shared = SharedMethods()
   
-  init?(size: Int, location: String) {
+  init?(size: UInt64, location: String) {
     self.location = location
     var fileManager = NSFileManager.defaultManager()
     fileManager.createFileAtPath(location, contents: nil, attributes: nil)
-    if let file = NSMutableData(contentsOfFile: location) {
-      var byte = UnsafePointer<Void>(bitPattern: 0x00)
-      for var i = 0; i < size; i++ {
-        file.appendBytes(byte, length: sizeof(Void))
+    if let file = NSFileHandle(forWritingAtPath: location) {
+      var data = NSData(bytes: [0x00], length: sizeof(CUnsignedChar))
+      for var i: UInt64 = 0; i < size; i++ {
+        file.seekToFileOffset(i)
+        file.writeData(data)
       }
     }
     else { return nil }
@@ -82,6 +83,7 @@ class BitFile: BitType {
     get {
       if let file = NSFileHandle(forReadingAtPath: location) {
         let byte = getByte(index, file)
+        println(byte)
         file.closeFile()
         return 0 != (byte & shared.mask(index))
       }
@@ -90,9 +92,12 @@ class BitFile: BitType {
     set(value) {
       if let file = NSFileHandle(forUpdatingAtPath: location) {
         var byte = getByte(index, file)
+        println(byte)
         if value == true {
           byte |= shared.mask(index)
           let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
+          let byteIndex = UInt64(shared.byteIndex(index))
+          file.seekToFileOffset(byteIndex)
           file.writeData(dataToWrite)
           file.closeFile()
         }

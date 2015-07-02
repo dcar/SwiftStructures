@@ -10,8 +10,8 @@ import UIKit
 import XCTest
 
 class BitVectorTest: XCTestCase {
-  var bitVector = BitVector(size: 22)
-  var bitFile = BitFile(size: 22, location: "/Users/Dom/bit-file.dat")!
+  var bitVector = BitVector(size: 40000)
+  var bitFile = BitFile(size: 1000, location: "/Users/Dom/bit-file.dat")!
   
   func testFalse() {
     bitVector[5] = true
@@ -27,8 +27,8 @@ class BitVectorTest: XCTestCase {
   }
   
   func testBitFileTrue() {
-    bitFile[21] = true
-    var value = bitFile[21]
+    bitFile[998] = true
+    var value = bitFile[998]
     XCTAssert(value == true, "value Should be true.")
   }
 
