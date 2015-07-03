@@ -31,7 +31,7 @@ class BitVector: BitType {
   private var shared = SharedMethods()
   
   init(size: Int) {
-    data = [UInt8](count: size, repeatedValue: 0x00)
+    data = [UInt8](count: shared.byteIndex(size), repeatedValue: 0x00)
   }
   
   subscript(index: Int) -> Bool {
@@ -64,7 +64,7 @@ class BitFile: BitType {
     fileManager.createFileAtPath(location, contents: nil, attributes: nil)
     if let file = NSFileHandle(forWritingAtPath: location) {
       var data = NSData(bytes: [0x00], length: sizeof(CUnsignedChar))
-      for var i: UInt64 = 0; i < size; i++ {
+      for var i: UInt64 = 0; i < (size >> 3); i++ {
         file.seekToFileOffset(i)
         file.writeData(data)
       }
