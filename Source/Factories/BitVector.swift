@@ -91,7 +91,6 @@ class BitFile: BitType {
     
     set(value) {
       let byteIndex = UInt64(shared.byteIndex(index))
-      file?.seekToFileOffset(byteIndex)
       var byte = getByte(byteIndex)
       
       if value == true {
@@ -116,7 +115,6 @@ class BitFile: BitType {
     var bytes: [UInt8] = [0x00]
     let data = file!.readDataOfLength(1)
     data.getBytes(&bytes, length: 1)
-    println(data)
     return bytes[0]
   }
   
