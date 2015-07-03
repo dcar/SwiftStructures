@@ -98,15 +98,11 @@ class BitFile: BitType {
       
         if value == true {
           byte |= shared.mask(index)
-          let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
-          let byteIndex = UInt64(shared.byteIndex(index))
-          file?.writeData(dataToWrite)
+          writeByte(byte)
         }
         else {
           byte &= ~(shared.mask(index))
-          let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
-          let byteIndex = UInt64(shared.byteIndex(index))
-          file?.writeData(dataToWrite)
+          writeByte(byte)
         }
       
     }
@@ -116,6 +112,11 @@ class BitFile: BitType {
     var byte: CUnsignedChar = 0
     file?.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar))
     return byte
+  }
+  
+  private func writeByte(byte: CUnsignedChar) {
+    let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
+    file?.writeData(dataToWrite)
   }
   
   deinit {
