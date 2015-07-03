@@ -34,11 +34,13 @@ class BitVectorTest: XCTestCase {
   
   func testBitFileTrue() {
     bitFile?[545] = true
+    bitFile!.printAll()
     var value = bitFile?[545]
     XCTAssert(value == true, "value Should be true.")
     bitFile?[544] = true
     value = bitFile?[544]
-    XCTAssert(value == true, "value Should be false.")
+    bitFile!.printAll()
+    XCTAssert(value == true, "value Should be true.")
   }
 
 

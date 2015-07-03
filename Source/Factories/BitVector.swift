@@ -63,7 +63,7 @@ class BitFile: BitType {
     let created = fileManager.createFileAtPath(location, contents: nil, attributes: nil)
     if created {
       file = NSFileHandle(forUpdatingAtPath: location)
-      var data = NSData(bytes: [0x00], length: sizeof(CUnsignedChar))
+      var data = NSData(bytes: [0x00], length: sizeofValue(0x00))
       for var i: UInt64 = 0; i < (size >> 3); i++ {
         file?.seekToFileOffset(i)
         file?.writeData(data)
@@ -85,37 +85,44 @@ class BitFile: BitType {
     
     get {
       let byteIndex = UInt64(shared.byteIndex(index))
-      file?.seekToFileOffset(byteIndex)
       let byte = getByte(byteIndex)
       return 0 != (byte & shared.mask(index))
     }
     
     set(value) {
+      let byteIndex = UInt64(shared.byteIndex(index))
+      file?.seekToFileOffset(byteIndex)
+      var byte = getByte(byteIndex)
       
-        let byteIndex = UInt64(shared.byteIndex(index))
-        var byte = getByte(byteIndex)
-        file?.seekToFileOffset(byteIndex)
-      
-        if value == true {
-          byte |= shared.mask(index)
-          writeByte(byte)
-        }
-        else {
-          byte &= ~(shared.mask(index))
-          writeByte(byte)
-        }
+      if value == true {
+        byte |= shared.mask(index)
+        writeByte(byte, byteIndex)
+      }
+      else {
+        byte &= ~(shared.mask(index))
+        writeByte(byte, byteIndex)
+      }
       
     }
   }
   
-  private func getByte(byteIndex: UInt64) -> CUnsignedChar {
-    var byte: CUnsignedChar = 0
-    file?.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar))
-    return byte
+  func printAll() {
+    file?.seekToFileOffset(0)
+    println(file!.readDataToEndOfFile())
   }
   
-  private func writeByte(byte: CUnsignedChar) {
-    let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
+  private func getByte(byteIndex: UInt64) -> UInt8 {
+    file?.seekToFileOffset(byteIndex)
+    var bytes: [UInt8] = [0x00]
+    let data = file!.readDataOfLength(1)
+    data.getBytes(&bytes, length: 1)
+    println(data)
+    return bytes[0]
+  }
+  
+  private func writeByte(byte: UInt8, _ byteIndex: UInt64) {
+    file?.seekToFileOffset(byteIndex)
+    let dataToWrite = NSData(bytes: [byte as CUnsignedChar], length: 1)
     file?.writeData(dataToWrite)
   }
   
