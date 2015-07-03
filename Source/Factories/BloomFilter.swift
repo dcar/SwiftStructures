@@ -45,22 +45,29 @@ class BloomFilter {
     bitType = BitVector(size: m)
   }
   
+  init?(n: Int, p: Double, path: String) {
+    calculate(n, p)
+    
+    bitType = BitFile(size: UInt64(m), location: path)
+    
+    if bitType == nil { return nil }
+  }
+  
   
   //designate your desired array size and number of hashes
   init(m: Int, k: Int) {
-    self.k = k
-    self.m = m
-    var excp = NSException(name: "Size Error", reason: "m must be > 0", userInfo: nil)
-    if m < 0 { excp.raise() }
+    create(m, k)
     bitType = BitVector(size: m)
   }
   
-  init?(n: Int, p: Double, path: String) {
-    calculate(n, p)
-    if let bitType = BitFile(size: UInt64(m), location: path) {}
-    else { return nil }
+  init?(m: Int, k: Int, path: String) {
+    create(m, k)
+    bitType = BitFile(size: UInt64(m), location: path)
+    
+    if bitType == nil { return nil }
   }
   
+
   
   func insert(item: Queryable) {
     if m == 0 || k == 0 { return }
@@ -93,4 +100,10 @@ class BloomFilter {
     if m < 0 { excp.raise() }
   }
   
+  private func create(m: Int, _ k: Int) {
+    self.k = k
+    self.m = m
+    var excp = NSException(name: "Size Error", reason: "m must be > 0", userInfo: nil)
+    if m < 0 { excp.raise() }
+  }
 }
