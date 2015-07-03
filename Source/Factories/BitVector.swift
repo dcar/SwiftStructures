@@ -9,7 +9,7 @@
 import Foundation
 
 protocol BitType {
-  subscript(index: Int) -> Bool { get set}
+  subscript(index: Int) -> Bool { get set }
 }
 
 private class SharedMethods {
@@ -55,61 +55,70 @@ class BitVector: BitType {
 }
 
 class BitFile: BitType {
-  private var location: String = ""
+  private var file: NSFileHandle?
   private var shared = SharedMethods()
   
   init?(size: UInt64, location: String) {
-    self.location = location
     var fileManager = NSFileManager.defaultManager()
-    fileManager.createFileAtPath(location, contents: nil, attributes: nil)
-    if let file = NSFileHandle(forWritingAtPath: location) {
+    let created = fileManager.createFileAtPath(location, contents: nil, attributes: nil)
+    if created {
+      file = NSFileHandle(forUpdatingAtPath: location)
       var data = NSData(bytes: [0x00], length: sizeof(CUnsignedChar))
       for var i: UInt64 = 0; i < (size >> 3); i++ {
-        file.seekToFileOffset(i)
-        file.writeData(data)
+        file?.seekToFileOffset(i)
+        file?.writeData(data)
       }
     }
     else { return nil }
   }
   
   init?(location: String) {
-    self.location = location
-    if let file = NSMutableData(contentsOfFile: location) {
+    var fileManager = NSFileManager.defaultManager()
+    let exists = fileManager.fileExistsAtPath(location)
+    if exists {
+      self.file = NSFileHandle(forUpdatingAtPath: location)
     }
     else { return nil }
   }
   
   subscript(index: Int) -> Bool {
+    
     get {
-      if let file = NSFileHandle(forReadingAtPath: location) {
-        let byte = getByte(index, file)
-        println(byte)
-        file.closeFile()
-        return 0 != (byte & shared.mask(index))
-      }
-      else { return false }
+      let byteIndex = UInt64(shared.byteIndex(index))
+      file?.seekToFileOffset(byteIndex)
+      let byte = getByte(byteIndex)
+      return 0 != (byte & shared.mask(index))
     }
+    
     set(value) {
-      if let file = NSFileHandle(forUpdatingAtPath: location) {
-        var byte = getByte(index, file)
-        println(byte)
+      
+        let byteIndex = UInt64(shared.byteIndex(index))
+        var byte = getByte(byteIndex)
+        file?.seekToFileOffset(byteIndex)
+      
         if value == true {
           byte |= shared.mask(index)
           let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
           let byteIndex = UInt64(shared.byteIndex(index))
-          file.seekToFileOffset(byteIndex)
-          file.writeData(dataToWrite)
-          file.closeFile()
+          file?.writeData(dataToWrite)
         }
-      }
+        else {
+          byte &= ~(shared.mask(index))
+          let dataToWrite = NSData(bytes: [byte], length: sizeof(CUnsignedChar))
+          let byteIndex = UInt64(shared.byteIndex(index))
+          file?.writeData(dataToWrite)
+        }
+      
     }
   }
   
-  private func getByte(index: Int, _ file: NSFileHandle) -> CUnsignedChar {
-    let byteIndex = UInt64(shared.byteIndex(index))
-    file.seekToFileOffset(byteIndex)
+  private func getByte(byteIndex: UInt64) -> CUnsignedChar {
     var byte: CUnsignedChar = 0
-    file.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar))
+    file?.readDataOfLength(1).getBytes(&byte, length: sizeof(CUnsignedChar))
     return byte
+  }
+  
+  deinit {
+    file?.closeFile()
   }
 }
