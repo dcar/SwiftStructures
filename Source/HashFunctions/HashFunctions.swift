@@ -10,7 +10,7 @@ import Foundation
 
 struct HashFunctions {
   static func murmur32(seed: Int, str: String) -> UInt32 {
-    var len = CInt(count(str))
+    let len = CInt(str.characters.count)
     return MurmurHashAligned2(str, len, CUnsignedInt(seed))
   }
 }

@@ -20,7 +20,7 @@ extension String: Queryable {
 
 extension Int: Queryable {
   func hash(seed: Int) -> UInt32 {
-    return HashFunctions.murmur32(seed, str: (self.description))
+    return HashFunctions.murmur32(seed, str: self.description)
   }
 }
 
@@ -45,30 +45,13 @@ class BloomFilter {
     bitType = BitVector(size: m)
   }
   
-  init?(n: Int, p: Double, path: String) {
-    calculate(n, p)
-    
-    bitType = BitFile(size: UInt64(m), location: path)
-    
-    if bitType == nil { return nil }
-  }
-  
   
   //designate your desired array size and number of hashes
   init(m: Int, k: Int) {
-    create(m, k)
+    calculate(m, k)
     bitType = BitVector(size: m)
   }
-  
-  init?(m: Int, k: Int, path: String) {
-    create(m, k)
-    bitType = BitFile(size: UInt64(m), location: path)
     
-    if bitType == nil { return nil }
-  }
-  
-
-  
   func insert(item: Queryable) {
     if m == 0 || k == 0 { return }
     
@@ -96,14 +79,14 @@ class BloomFilter {
     let numerator: Double = Double(n) * log(p)
     m = Int( (numerator / denominator) * -1.0 )
     k = Int( (Double(m) / Double(n)) * log(2.0) )
-    var excp = NSException(name: "False Positive Error", reason: "Probability too high: 0 to 1.", userInfo: nil)
+    let excp = NSException(name: "False Positive Error", reason: "Probability too high: 0 to 1.", userInfo: nil)
     if m < 0 { excp.raise() }
   }
   
-  private func create(m: Int, _ k: Int) {
+  private func calculate(m: Int, _ k: Int) {
     self.k = k
     self.m = m
-    var excp = NSException(name: "Size Error", reason: "m must be > 0", userInfo: nil)
+    let excp = NSException(name: "Size Error", reason: "m must be > 0", userInfo: nil)
     if m < 0 { excp.raise() }
   }
 }
