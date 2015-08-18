@@ -22,9 +22,9 @@ class BloomTest: XCTestCase {
       filter.insert(i)
     }
     
-    var checkInsertion: () -> Bool = { () -> Bool in
+    let checkInsertion: () -> Bool = { () -> Bool in
       for var i = 0; i < 4000; i++ {
-        var query = self.filter.query(i)
+        let query = self.filter.query(i)
         if query == false { return false }
       }
       return true

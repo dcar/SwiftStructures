@@ -156,7 +156,7 @@ class AVLTest: XCTestCase {
         
         //build the tree list
         for number in numberList {
-            println("adding \(number) to avl tree...")
+            print("adding \(number) to avl tree...")
             avlTest.addNode(number)
         }
         
@@ -188,7 +188,7 @@ class AVLTest: XCTestCase {
         
         //build the tree list
         for number in numberList {
-            println("adding \(number) to avl tree...")
+            print("adding \(number) to avl tree...")
             avlTest.addNode(number)
         }
 

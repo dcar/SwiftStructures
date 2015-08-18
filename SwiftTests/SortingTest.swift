@@ -63,7 +63,7 @@ class SortingTest: XCTestCase {
                 XCTFail("numberlist items not in sorted order..")
             }
             else {
-                println("item \(resultList[x]) is sorted..")
+                print("item \(resultList[x]) is sorted..")
             }
             
             
@@ -93,7 +93,7 @@ class SortingTest: XCTestCase {
                 XCTFail("numberlist items not in sorted order..")
             }
             else {
-                println("item \(resultList[x]) is sorted..")
+                print("item \(resultList[x]) is sorted..")
             }
             
             
@@ -107,7 +107,7 @@ class SortingTest: XCTestCase {
     func testQuickSort() {
         
         
-        var sortTest: Sorting = Sorting()
+        let sortTest: Sorting = Sorting()
         XCTAssertNotNil(sortTest, "sorting instance not created..")
         
         var resultList: Array<Int>! = sortTest.quickSort(numberList)
@@ -119,7 +119,7 @@ class SortingTest: XCTestCase {
                 XCTFail("numberlist items not in sorted order..")
             }
             else {
-                println("item \(resultList[x]) is sorted..")
+                print("item \(resultList[x]) is sorted..")
             }
             
             
@@ -131,12 +131,12 @@ class SortingTest: XCTestCase {
         
         10.times { i in
            // echo "(i) times"
-            println("\(i) times")
+            print("\(i) times")
         }
         
 
         
-        var sortTest: Sorting = Sorting()
+        let sortTest: Sorting = Sorting()
         XCTAssertNotNil(sortTest, "sorting instance not created..")
         
         var resultList: Array<Int>! = sortTest.mergeSort(numberList)
@@ -148,7 +148,7 @@ class SortingTest: XCTestCase {
                 XCTFail("numberlist items not in sorted order..")
             }
             else {
-                println("item \(resultList[x]) is sorted..")
+                print("item \(resultList[x]) is sorted..")
             }
             
             

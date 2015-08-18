@@ -122,7 +122,7 @@ class GraphTest: XCTestCase {
         testGraph.traverse(vertexA) { (inout node: Vertex) -> () in
             
             node.visited = true
-            println("traversed vertex: \(node.key!)..")
+            print("traversed vertex: \(node.key!)..")
             
         }
         
@@ -140,7 +140,7 @@ class GraphTest: XCTestCase {
         */
         
         node.visited = true
-        println("traversed vertex: \(node.key!)..")
+        print("traversed vertex: \(node.key!)..")
     }
 
     
@@ -181,7 +181,7 @@ class GraphTest: XCTestCase {
         
         //iterate and print each path sequence
         while (current != nil) {
-            println("The path is : \(current.destination.key!) with a total of : \(current.total)..")
+            print("The path is : \(current.destination.key!) with a total of : \(current.total)..")
             current = current.previous
         }
 
